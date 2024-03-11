@@ -1,0 +1,87 @@
+<%- include ('./templates/header.ejs') %>
+    </head>
+
+    <body>
+        <header>
+            <nav class="navbar">
+                <div class="navbar-title">Profiles</div>
+                <div class="search-container">
+                    <input type="text" placeholder="Search...">
+                    <button class="search-button"><i class="fa fa-search"></i></button>
+                </div>
+
+            </nav>
+        </header>
+        <section id="content-body">
+            <div class="grid-container">
+                <div class="grid-item large">
+                    <div class="data-body">
+                        <% if (userData.length !=0) { %>
+                            <% for ( user of userData ){ %>
+                                <div class="box">
+                                    <div class="inBoxLeft">
+                                        <div class="profilePicture"
+                                            style="background-image: url('<%= user.profileImage %>');"></div>
+                                        <div style="width: 75px;"></div>
+                                        <div class="profileDetails">
+                                            <h3 id="d_name">
+                                                <%=user.username %>
+                                            </h3 >
+                                            <p id="d_email">
+                                                <%=user.email %>
+                                            </p>
+                                            <p id ="d_phone">
+                                                <%=user.phone %>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="inBoxRight">
+                                        <button class="edit-btn">edit</button>
+                                        <button class="delete-btn">delete</button>
+                                    </div>
+                                </div>
+                                <% }%>
+                        <% } else { %>
+                            <h1>No Data Found</h1>
+                            <% } %>
+                    </div>
+                </div>
+                <div class="grid-item small">
+                    <div class="container">
+                        <h1>User Registration Form</h1>
+                        <form id="user-form" method="post" enctype="multipart/form-data" action="/adduser">
+                            <div class="form-group">
+                                <label for="username">Username:</label>
+                                <input type="text" id="username" name="username" placeholder="Enter your username">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" id="email" name="email" placeholder="Enter your email address">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number:</label>
+                                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
+                            </div>
+                            <div class="form-group">
+                                <label for="userProfile">Profile Picture:</label>
+                                <input type="file" id="userProfile" name="userProfile" accept="image/*">
+                            </div>
+                            <div class="button-group">
+                                <button type="submit">Add User</button>
+                                <button type="button" onclick="clearForm()">Reset</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </body>
+    <script>
+        function clearForm() {
+            document.querySelector('#user-form').reset();
+        }  
+    </script>
+
+    </html>

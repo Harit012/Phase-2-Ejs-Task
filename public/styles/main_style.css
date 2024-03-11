@@ -1,0 +1,294 @@
+/* Basic reset for consistent styling across browsers */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Header styles */
+header {
+    background-color: #252915;
+    padding: 2rem;
+    margin-bottom: 1rem;
+}
+
+/* Navbar styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Title styles */
+.navbar-title {
+    font-size: 1.5rem;
+    /* Adjust title size as needed */
+    font-weight: bold;
+    color: aliceblue;
+}
+
+/* Search container styles */
+.search-container {
+    position: relative;
+    display: flex;
+    /* Added flexbox for button positioning */
+}
+
+.search-container input[type="text"] {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    width: 100%;
+    /* Adjust search bar width as needed */
+}
+
+.search-container input[type="text"]:focus {
+    outline: none;
+    border-color: #888;
+}
+
+/* Search button styles */
+.search-button {
+    padding: 0.5rem;
+    /* Adjust padding as needed */
+    border: none;
+    border-radius: 4px;
+    width: 3rem;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: #64726f;
+    /* Green color for search button */
+    color: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0.5rem;
+    /* Add spacing between search bar and button */
+}
+
+.search-button:hover {
+    opacity: 0.8;
+    /* Add hover effect */
+}
+
+/* Font Awesome icon (optional) */
+.fas.fa-search {
+    font-family: "Font Awesome";
+    /* Add Font Awesome to your project */
+}
+
+/* Button container styles */
+.button-container {
+    display: flex;
+}
+
+.button-container button {
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-left: 0.5rem;
+    /* Add spacing between buttons */
+}
+
+.add-button {
+    background-color: #4CAF50;
+    /* Green color for add button */
+    color: white;
+}
+
+
+
+.add-button:hover {
+    opacity: 0.8;
+    /* Add hover effect */
+}
+
+/* Responsiveness (adjust media query breakpoints as needed) */
+@media (max-width: 768px) {
+    .navbar-title {
+        font-size: 1.2rem;
+    }
+}
+
+/* grid layout */
+
+section {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    min-height: 100vh;
+    /* Ensures viewport height */
+}
+
+.grid-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 75% 25%;
+    gap: 10px;
+    background-color: #ffffff;
+    padding: 10px;
+}
+
+.grid-item.large {
+    /* grid-column: span 1; */
+    background-color: rgb(255, 255, 255);
+
+    /* Spans across two columns (75%) */
+    background-color: #ffffff;
+    /* Optional background color for large area */
+    padding: 20px;
+
+}
+
+.grid-item.small {
+    /* visibility: hidden; */
+    grid-column: span 1;
+    background-color: yellowgreen;
+    /* Spans across one column (25%) */
+    background-color: #ffffff;
+    /* Optional background color for small area */
+}
+
+
+/* form  */
+
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    background-color: rgb(158, 160, 160);
+    position: sticky;
+    top: 15%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.form-group label {
+    display: block;
+    width: 30%;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 70%;
+}
+
+@media screen and (max-width: 768px) {
+    .form-group label {
+        width: 100%;
+    }
+
+    .form-group input {
+        width: 100%;
+    }
+}
+
+.button-group {
+    text-align: center;
+}
+
+.button-group button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+.button-group button:hover {
+    opacity: 0.8;
+}
+
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+}
+
+button[type="button"] {
+    background-color: #f0ad4e;
+    color: white;
+}
+
+/* box */
+
+.box {
+    width: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10rem;
+    border: 1px solid rgb(177, 177, 177);
+}
+
+.inBoxLeft {
+    display: flex;
+}
+
+.profilePicture {
+    height: 130px;
+    width: 130px;
+    border-radius: 50%;
+    margin: 20px;
+}
+
+.profileDetails {
+    position: relative;
+    top: 20px;
+}
+
+#d_name,
+#d_email,
+#d_phone {
+    margin-top: 10%;
+}
+
+
+
+.edit-btn {
+    height: 3rem;
+    width: 6rem;
+    border-radius: 8%;
+    background-color: rgb(74, 101, 206);
+    color: azure;
+    font-size: 1.25rem;
+    margin: 1rem
+}
+
+.delete-btn {
+    height: 3rem;
+    width: 7rem;
+    border-radius: 8%;
+    background-color: red;
+    color: azure;
+    font-size: 1.25rem;
+    margin: 1rem;
+}
