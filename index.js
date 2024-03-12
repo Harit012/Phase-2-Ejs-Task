@@ -29,7 +29,7 @@ const errorHandler = require("./controllers/errorController");
 
 app.use(upload.single("userProfile"), operationalRoutes);
 
-app.use("/", upload.single("userProfile"), errorHandler.getError);
+app.use("/", errorHandler.getError);
 
 app.listen(3050, () => {
   console.log(`app is live on port 3050`);

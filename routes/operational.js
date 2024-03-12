@@ -1,5 +1,5 @@
-const path = require('path');
-const express = require('express');
+const path = require("path");
+const express = require("express");
 const multer = require("multer");
 
 const storage = multer.diskStorage({
@@ -11,23 +11,28 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({storage: storage});
+const upload = multer({ storage: storage });
 
 const router = express.Router();
 
-const operationController = require('../controllers/operationController');
+const operationController = require("../controllers/operationController");
 
-router.get('/', operationController.getHomePage );
+router.get("/home", operationController.getHomePage);
 
-router.get('/adduser',upload.single('profileImage'), operationController.getAddUser );
+router.post("/home", operationController.postAddUser);
 
-router.get('/edituser/:userId', operationController.getEditUser );
+router.get(
+  "/adduser",
+  upload.single("profileImage"),
+  operationController.getAddUser
+);
 
-router.post('/adduser', operationController.postAddUser );
+router.get("/edituser/:userId", operationController.getEditUser);
 
-router.put('/edituser/:userId', operationController.putEditUser);
+// router.post("/adduser", operationController.postAddUser);
 
-router.delete('/deleteuser/:userId', operationController.deleteUser);
+router.put("/edituser/:userId", operationController.putEditUser);
 
+router.delete("/deleteuser/:userId", operationController.deleteUser);
 
 module.exports = router;

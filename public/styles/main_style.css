@@ -14,7 +14,7 @@ body {
 header {
     background-color: #252915;
     padding: 2rem;
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
 }
 
 /* Navbar styles */
@@ -245,8 +245,10 @@ button[type="button"] {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 10rem;
-    border: 1px solid rgb(177, 177, 177);
+    height: 7rem;
+    border: 1px solid rgb(218, 217, 217);
+    margin-top: 2%;
+    margin-bottom: 2%;
 }
 
 .inBoxLeft {
@@ -254,8 +256,8 @@ button[type="button"] {
 }
 
 .profilePicture {
-    height: 130px;
-    width: 130px;
+    height: 100px;
+    width: 100px;
     border-radius: 50%;
     margin: 20px;
 }
@@ -268,14 +270,14 @@ button[type="button"] {
 #d_name,
 #d_email,
 #d_phone {
-    margin-top: 10%;
+    margin-top: 5%;
 }
 
 
 
 .edit-btn {
-    height: 3rem;
-    width: 6rem;
+    height: 2rem;
+    width: 5rem;
     border-radius: 8%;
     background-color: rgb(74, 101, 206);
     color: azure;
@@ -284,8 +286,8 @@ button[type="button"] {
 }
 
 .delete-btn {
-    height: 3rem;
-    width: 7rem;
+    height: 2rem;
+    width: 5rem;
     border-radius: 8%;
     background-color: red;
     color: azure;

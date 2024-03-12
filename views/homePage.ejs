@@ -26,11 +26,11 @@
                                         <div class="profileDetails">
                                             <h3 id="d_name">
                                                 <%=user.username %>
-                                            </h3 >
+                                            </h3>
                                             <p id="d_email">
                                                 <%=user.email %>
                                             </p>
-                                            <p id ="d_phone">
+                                            <p id="d_phone">
                                                 <%=user.phone %>
                                             </p>
                                         </div>
@@ -42,30 +42,33 @@
                                     </div>
                                 </div>
                                 <% }%>
-                        <% } else { %>
-                            <h1>No Data Found</h1>
-                            <% } %>
+                                    <% } else { %>
+                                        <h1>No Data Found</h1>
+                                        <% } %>
                     </div>
                 </div>
                 <div class="grid-item small">
                     <div class="container">
                         <h1>User Registration Form</h1>
-                        <form id="user-form" method="post" enctype="multipart/form-data" action="/adduser">
+                        <form id="user-form" method="post" enctype="multipart/form-data" action="/home">
                             <div class="form-group">
                                 <label for="username">Username:</label>
-                                <input type="text" id="username" name="username" placeholder="Enter your username">
+                                <input type="text" id="username" name="username" placeholder="Enter your username"
+                                    required>
                             </div>
                             <div class="form-group">
                                 <label for="email">Email:</label>
-                                <input type="email" id="email" name="email" placeholder="Enter your email address">
+                                <input type="email" id="email" name="email" placeholder="Enter your email address"
+                                    required>
                             </div>
                             <div class="form-group">
                                 <label for="phone">Phone Number:</label>
-                                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
+                                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number"
+                                    required>
                             </div>
                             <div class="form-group">
                                 <label for="userProfile">Profile Picture:</label>
-                                <input type="file" id="userProfile" name="userProfile" accept="image/*">
+                                <input type="file" id="userProfile" name="userProfile" accept="image/*" required>
                             </div>
                             <div class="button-group">
                                 <button type="submit">Add User</button>
