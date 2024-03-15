@@ -260,6 +260,7 @@ button[type="button"] {
     width: 100px;
     border-radius: 50%;
     margin: 20px;
+    background-size: cover;
 }
 
 .profileDetails {

@@ -3,6 +3,7 @@ const path = require("path");
 const { urlencoded } = require("body-parser");
 const multer = require("multer");
 const mongoose = require ("mongoose");
+const cors = require("cors");
 mongoose.connect("mongodb://localhost:27017/EjsTask");
   
 
@@ -23,6 +24,8 @@ app.set("views", "views");
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(urlencoded({ extended: true }));
+app.use(cors())
+app.use(express.json());
 
 const operationalRoutes = require("./routes/operational");
 const errorHandler = require("./controllers/errorController");

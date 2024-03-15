@@ -15,7 +15,7 @@
         <section id="content-body">
             <div class="grid-container">
                 <div class="grid-item large">
-                    <div class="data-body">
+                    <div class="data-body" id="data-body">
                         <% if (userData.length !=0) { %>
                             <% for ( user of userData ){ %>
                                 <div class="box">
@@ -50,7 +50,7 @@
                 <div class="grid-item small">
                     <div class="container">
                         <h1>User Registration Form</h1>
-                        <form id="user-form" method="post" enctype="multipart/form-data" action="/home">
+                        <form id="user-form" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="username">Username:</label>
                                 <input type="text" id="username" name="username" placeholder="Enter your username"
@@ -72,19 +72,16 @@
                             </div>
                             <div class="button-group">
                                 <button type="submit">Add User</button>
-                                <button type="button" onclick="clearForm()">Reset</button>
+                                <button type="button" onclick=clearForm()>Reset</button>
                             </div>
                         </form>
+                            
+                        </script>
                     </div>
                 </div>
             </div>
 
         </section>
     </body>
-    <script>
-        function clearForm() {
-            document.querySelector('#user-form').reset();
-        }  
-    </script>
-
+    <script src="./javascript/add.js" ></script>
     </html>
