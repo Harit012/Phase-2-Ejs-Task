@@ -34,20 +34,21 @@ document
     </div>
 
     <div class="inBoxRight">
-        <button class="edit-btn"
-            style="height: 2rem;width: 5rem;border-radius: 8%;background-color: rgb(74, 101, 206);color: azure;font-size: 1.2">edit</button>
-        <button class="delete-btn"
-            style="height: 2rem;width: 5rem;border-radius: 8%;background-color:red;color: azure;font-size: 1.2">delete</button>
+    <form id="edit-form" enctype="multipart/form-data">
+    <input type="text" id="id" name="id" value="<%= user._id %>" hidden>
+    <button typr="submit" class="edit-btn" style="height: 2rem;width: 5rem;border-radius: 8%;background-color: rgb(74, 101, 206);color: azure;font-size: 1.2">edit</button>
+</form>
+<form id="delete-form" enctype="multipart/form-data">
+    <input type="text" id="id" name="id" value="<%= user._id %>" hidden>
+    <button typr="submit" class="delete-btn" style="height: 2rem;width: 5rem;border-radius: 8%;background-color:red;color: azure;font-size: 1.2">delete</button>
+</form>
     </div>
 </div>
     `;
 
     databody.innerHTML += htmlString;
-    
+
     (function clearForm() {
-      document.querySelector("#username").value = "";
-      document.querySelector("#email").value = "";
-      document.querySelector("#phone").value = "";
-      document.querySelector("#userProfile").value = "";
+      $("#user-form")[0].reset();
     })();
   });

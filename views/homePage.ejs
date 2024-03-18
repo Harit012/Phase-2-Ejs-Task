@@ -6,7 +6,7 @@
             <nav class="navbar">
                 <div class="navbar-title">Profiles</div>
                 <div class="search-container">
-                    <input type="text" placeholder="Search...">
+                    <input id="searchBar" type="text" placeholder="Search...">
                     <button class="search-button"><i class="fa fa-search"></i></button>
                 </div>
 
@@ -37,8 +37,17 @@
                                     </div>
 
                                     <div class="inBoxRight">
-                                        <button class="edit-btn">edit</button>
-                                        <button class="delete-btn">delete</button>
+                                        <form id="edit-form" enctype="multipart/form-data" method="post">
+                                            <input type="text" id="id" name="id" value="<%= user._id %>" hidden>
+                                            <input type="text" id="Edname" name="Edname" value="<%= user.username %>" hidden>
+                                            <input type="email" id="Edemail" name="Edemail" value="<%= user.email %>" hidden>
+                                            <input type="number" id="Edphone" name="Edphone" value="<%= user.phone %>" hidden>
+                                            <button  class="edit-btn">edit</button>
+                                        </form>
+                                        <form id="delete-form" enctype="multipart/form-data" method="post">
+                                            <input type="text" id="id" name="id" value="<%= user._id %>" hidden>
+                                            <button class="delete-btn">delete</button>
+                                        </form>
                                     </div>
                                 </div>
                                 <% }%>
@@ -84,4 +93,12 @@
         </section>
     </body>
     <script src="./javascript/add.js" ></script>
+    <script src="./javascript/search.js"></script>
+    <!-- <script src="./javascript/edit.js"></script>
+    <script src="./javascript/delete.js"></script> -->
+    <script>
+        function clearForm(){
+            $('#user-form')[0].reset();
+        }
+    </script>
     </html>
