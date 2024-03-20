@@ -38,9 +38,17 @@ exports.postSearchUser = async (req, res, next) => {
     let userdata = await userModel.find();
     res.send(userdata);
   } else {
-    const search = new RegExp(req.body.search , "i",/\s/);
+    // let ex = `/${req.body.search}/`;
+    const search = new RegExp(`${Number(req.body.search)}`);
     try {
-      const userdata = await userModel.find({ username: search  });
+      // const userdata = await userModel.find({ $or: [{"email":search},{"phone":Number(search)},{"username":search}] });
+      const userdata = await userModel.find({
+        $or: [
+          { username: {$regex: req.body.search, $options: "i"} },
+          { email:  {$regex: req.body.search, $options: "i"} },
+          // { phone: Number(search) },
+        ],
+      });
       if (userdata == []) {
         res.send({ data: "no Data found" });
       } else {
@@ -53,16 +61,24 @@ exports.postSearchUser = async (req, res, next) => {
   }
 };
 
-
 exports.putEditUser = async (req, res, next) => {
-  console.log(`Server side recived data :- `+ req);
+  console.log(`Server side recived data :- ` + req);
   console.log(JSON.stringify(req.body));
   console.log(req.data);
-  res.send(req.data);
-  //  let email = req.body.email;
-  //  let userdata = await userModel.findOne({ email: email }) ;
-  //  console.log(userdata);
-   
+
+  let editedEntry = await userModel.findOneAndUpdate(
+    { _id: req.body._id },
+    {
+      $set: {
+        username: req.body.username,
+        email: req.body.email,
+        phone: req.body.phone,
+      },
+    }
+  );
+  updatedEntry = await userModel.findOne({ _id: req.body._id });
+
+  res.send(updatedEntry);
 };
 
 exports.deleteUser = async (req, res, next) => {
@@ -73,4 +89,4 @@ exports.deleteUser = async (req, res, next) => {
   let userdata = await userModel.deleteOne({ email: email });
 
   res.send(userdata);
-}
+};

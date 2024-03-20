@@ -1,7 +1,7 @@
 $(document).ready(function (e) {
-    // e.preventDefault();
+  // e.preventDefault();
 
-  $("#searchBar").keypress(async function () {
+  $("#searchBar").on("keypress", async function () {
     console.log("client called");
 
     setTimeout(async function () {
@@ -50,6 +50,6 @@ $(document).ready(function (e) {
         }
         $("#data-body").html(htmlString);
       });
-    }, 1000);
+    }, 100);
   });
 });
