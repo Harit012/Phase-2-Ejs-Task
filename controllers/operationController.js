@@ -14,7 +14,6 @@ exports.postAddUser = async (req, res, next) => {
   let path = req.file.path;
   path = path.slice(7, req.file.path.length);
   path = path.replace("\\", "/");
-  console.log("post route called");
 
   try {
     const user = await userModel.create({
@@ -23,7 +22,7 @@ exports.postAddUser = async (req, res, next) => {
       phone: req.body.phone,
       profileImage: path,
     });
-    console.log(user);
+    // console.log(user);
     res.type("json");
     res.send(user);
   } catch (err) {
@@ -38,15 +37,12 @@ exports.postSearchUser = async (req, res, next) => {
     let userdata = await userModel.find();
     res.send(userdata);
   } else {
-    // let ex = `/${req.body.search}/`;
     const search = new RegExp(`${Number(req.body.search)}`);
     try {
-      // const userdata = await userModel.find({ $or: [{"email":search},{"phone":Number(search)},{"username":search}] });
       const userdata = await userModel.find({
         $or: [
           { username: {$regex: req.body.search, $options: "i"} },
           { email:  {$regex: req.body.search, $options: "i"} },
-          // { phone: Number(search) },
         ],
       });
       if (userdata == []) {
@@ -64,26 +60,28 @@ exports.postSearchUser = async (req, res, next) => {
 exports.putEditUser = async (req, res, next) => {
   console.log(`Server side recived data :- ` + req);
   console.log(JSON.stringify(req.body));
-  console.log(req.data);
+  console.log(req.body.id);
+  
 
   let editedEntry = await userModel.findOneAndUpdate(
-    { _id: req.body._id },
+    { _id: req.body.id },
     {
       $set: {
         username: req.body.username,
         email: req.body.email,
         phone: req.body.phone,
       },
-    }
+    },
+    { new: true }
   );
-  updatedEntry = await userModel.findOne({ _id: req.body._id });
+  // updatedEntry = await userModel.findOne({ _id: req.body._id });
 
-  res.send(updatedEntry);
+  res.send(editedEntry);
 };
 
 exports.deleteUser = async (req, res, next) => {
   let email = req.body.email;
-  console.log(email);
+  // console.log(email);
   let id = req.body._id;
   console.log(id);
   let userdata = await userModel.deleteOne({ email: email });

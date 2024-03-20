@@ -1,4 +1,8 @@
+
+
 $(document).ready(function (e) {
+    // run();
+
   const buttons = document.querySelectorAll(".delete-btn");
   buttons.forEach((button) => {
     button.addEventListener("click", function (e) {
@@ -23,5 +27,7 @@ $(document).ready(function (e) {
         },
       });
     });
+    // iife
+
   });
 });
