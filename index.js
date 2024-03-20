@@ -26,7 +26,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(urlencoded({ extended: true }));
 app.use(cors())
 app.use(express.json());
-
 const operationalRoutes = require("./routes/operational");
 const errorHandler = require("./controllers/errorController");
 

@@ -1,3 +1,4 @@
+
 document
   .querySelector("#user-form")
   .addEventListener("submit", async function (e) {
@@ -34,19 +35,25 @@ document
     </div>
 
     <div class="inBoxRight">
-    <form id="edit-form" enctype="multipart/form-data">
-    <input type="text" id="id" name="id" value="<%= user._id %>" hidden>
-    <button typr="submit" class="edit-btn" style="height: 2rem;width: 5rem;border-radius: 8%;background-color: rgb(74, 101, 206);color: azure;font-size: 1.2">edit</button>
-</form>
-<form id="delete-form" enctype="multipart/form-data">
-    <input type="text" id="id" name="id" value="<%= user._id %>" hidden>
-    <button typr="submit" class="delete-btn" style="height: 2rem;width: 5rem;border-radius: 8%;background-color:red;color: azure;font-size: 1.2">delete</button>
-</form>
+    
+    <p id="id" name="id" hidden>${data._id}}</p>
+    <p id="Edname" hidden>${data.username}</p>
+    <p id="Edemail" hidden>${data.email}</p>
+    <p id="Edphone" hidden>${data.phone}</p>
+    <p id="Edprofile" hidden>${data.profileImage}</p>
+    <button class="edit-btn" style="height: 2rem;width: 5rem;border-radius: 8%;background-color: rgb(74, 101, 206);color: azure;font-size: 1.2">edit</button>
+
+    <button class="delete-btn" style="height: 2rem;width: 5rem;border-radius: 8%;background-color:red;color: azure;font-size: 1.2">delete</button>
+
     </div>
 </div>
     `;
 
-    databody.innerHTML += htmlString;
+    if (databody.innerHTML.trim() === "<h1>No Data Found</h1>") {
+      databody.innerHTML = htmlString;
+    } else {
+      databody.innerHTML += htmlString;
+    }
 
     (function clearForm() {
       $("#user-form")[0].reset();

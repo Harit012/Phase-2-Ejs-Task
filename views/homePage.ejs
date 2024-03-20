@@ -17,7 +17,7 @@
                 <div class="grid-item large">
                     <div class="data-body" id="data-body">
                         <% if (userData.length !=0) { %>
-                            <% for ( user of userData ){ %>
+                            <% for ( user of userData ){ let i=0; %>
                                 <div class="box">
                                     <div class="inBoxLeft">
                                         <div class="profilePicture"
@@ -36,29 +36,35 @@
                                         </div>
                                     </div>
 
-                                    <div class="inBoxRight">
-                                        <form id="edit-form" enctype="multipart/form-data" method="post">
-                                            <input type="text" id="id" name="id" value="<%= user._id %>" hidden>
-                                            <input type="text" id="Edname" name="Edname" value="<%= user.username %>" hidden>
-                                            <input type="email" id="Edemail" name="Edemail" value="<%= user.email %>" hidden>
-                                            <input type="number" id="Edphone" name="Edphone" value="<%= user.phone %>" hidden>
-                                            <button  class="edit-btn">edit</button>
-                                        </form>
-                                        <form id="delete-form" enctype="multipart/form-data" method="post">
-                                            <input type="text" id="id" name="id" value="<%= user._id %>" hidden>
-                                            <button class="delete-btn">delete</button>
-                                        </form>
+                                    <div class="inBoxRight" id="inBoxRight-<%= user._id %>">
+                                        <p id="id" hidden>
+                                            <%= user._id %>
+                                        </p>
+                                        <p id="Edname" hidden>
+                                            <%= user.username %>
+                                        </p>
+                                        <p id="Edemail" hidden>
+                                            <%= user.email %>
+                                        </p>
+                                        <p id="Edphone" hidden>
+                                            <%= user.phone %>
+                                        </p>
+                                        <p id="Edprofile" hidden>
+                                            <%= user.profileImage %>
+                                        </p>
+                                        <button class="edit-btn">edit</button>
+                                        <button class="delete-btn">delete</button>
                                     </div>
                                 </div>
-                                <% }%>
+                                <% i++; }%>
                                     <% } else { %>
                                         <h1>No Data Found</h1>
-                                        <% } %>
+                                        <%} %>
                     </div>
                 </div>
                 <div class="grid-item small">
                     <div class="container">
-                        <h1>User Registration Form</h1>
+                        <h1 id="form-title">User Registration Form</h1>
                         <form id="user-form" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="username">Username:</label>
@@ -67,38 +73,37 @@
                             </div>
                             <div class="form-group">
                                 <label for="email">Email:</label>
-                                <input type="email" id="email" name="email" placeholder="Enter your email address"
-                                    required>
+                                <input type="email" id="email" name="email" placeholder="Enter your email address" required>
                             </div>
                             <div class="form-group">
                                 <label for="phone">Phone Number:</label>
-                                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number"
-                                    required>
+                                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
                             </div>
                             <div class="form-group">
                                 <label for="userProfile">Profile Picture:</label>
                                 <input type="file" id="userProfile" name="userProfile" accept="image/*" required>
+                                <p id="insertedFile" style="position: relative;left: 50px;font-size: small;"></p>
                             </div>
                             <div class="button-group">
-                                <button type="submit">Add User</button>
-                                <button type="button" onclick=clearForm()>Reset</button>
+                                <button type="submit" id="formSubmitBtn">Add User</button>
+                                <button type="button" id="formResetBtn" onclick=clearForm()>Reset</button>
                             </div>
                         </form>
-                            
-                        </script>
                     </div>
                 </div>
             </div>
 
         </section>
     </body>
-    <script src="./javascript/add.js" ></script>
+    <script src="./javascript/add.js"></script>
     <script src="./javascript/search.js"></script>
-    <!-- <script src="./javascript/edit.js"></script>
-    <script src="./javascript/delete.js"></script> -->
+    <script src="./javascript/edit.js"></script>
+    <script src="./javascript/delete.js"></script>
     <script>
-        function clearForm(){
+        function clearForm() {
             $('#user-form')[0].reset();
+            $('#update-form')[0].reset();
         }
     </script>
+
     </html>

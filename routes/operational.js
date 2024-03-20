@@ -11,4 +11,8 @@ router.post("/adduser", operationController.postAddUser);
 
 router.post("/searchUser", operationController.postSearchUser);
 
+router.put("/editUser", operationController.putEditUser);
+
+router.delete("/deleteUser",operationController.deleteUser);
+
 module.exports = router;

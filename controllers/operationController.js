@@ -40,7 +40,7 @@ exports.postSearchUser = async (req, res, next) => {
   } else {
     const search = new RegExp(req.body.search , "i",/\s/);
     try {
-      const userdata = await userModel.find({ username: search });
+      const userdata = await userModel.find({ username: search  });
       if (userdata == []) {
         res.send({ data: "no Data found" });
       } else {
@@ -52,3 +52,25 @@ exports.postSearchUser = async (req, res, next) => {
     }
   }
 };
+
+
+exports.putEditUser = async (req, res, next) => {
+  console.log(`Server side recived data :- `+ req);
+  console.log(JSON.stringify(req.body));
+  console.log(req.data);
+  res.send(req.data);
+  //  let email = req.body.email;
+  //  let userdata = await userModel.findOne({ email: email }) ;
+  //  console.log(userdata);
+   
+};
+
+exports.deleteUser = async (req, res, next) => {
+  let email = req.body.email;
+  console.log(email);
+  let id = req.body._id;
+  console.log(id);
+  let userdata = await userModel.deleteOne({ email: email });
+
+  res.send(userdata);
+}
