@@ -22,7 +22,6 @@ exports.postAddUser = async (req, res, next) => {
       phone: req.body.phone,
       profileImage: path,
     });
-    // console.log(user);
     res.type("json");
     res.send(user);
   } catch (err) {
@@ -58,33 +57,33 @@ exports.postSearchUser = async (req, res, next) => {
 };
 
 exports.putEditUser = async (req, res, next) => {
-  console.log(`Server side recived data :- ` + req);
-  console.log(JSON.stringify(req.body));
-  console.log(req.body.id);
+  const oldpath= req.body.image;
+  if(req.file){
+    var path = req.file.path;
+    path = path.slice(7, req.file.path.length);
+    path = path.replace("\\", "/");
+  }
   
-
-  let editedEntry = await userModel.findOneAndUpdate(
+  let updatedUser = await userModel.findOneAndUpdate(
     { _id: req.body.id },
     {
       $set: {
         username: req.body.username,
         email: req.body.email,
         phone: req.body.phone,
+        profileImage: path?path:oldpath,
       },
     },
     { new: true }
   );
-  // updatedEntry = await userModel.findOne({ _id: req.body._id });
 
-  res.send(editedEntry);
+  res.send(updatedUser);
 };
 
 exports.deleteUser = async (req, res, next) => {
-  let email = req.body.email;
-  // console.log(email);
-  let id = req.body._id;
+  let id = req.body.id;
   console.log(id);
-  let userdata = await userModel.deleteOne({ email: email });
+  let userdata = await userModel.findByIdAndDelete({ _id: id });
 
   res.send(userdata);
 };
