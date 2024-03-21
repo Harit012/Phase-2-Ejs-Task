@@ -36,12 +36,16 @@ exports.postSearchUser = async (req, res, next) => {
     let userdata = await userModel.find();
     res.send(userdata);
   } else {
-    const search = new RegExp(`${Number(req.body.search)}`);
+    // let searchPhone = req.body.searchPhone;
+    // console.log(searchPhone);
+    // console.log(typeof searchPhone);
+    
     try {
       const userdata = await userModel.find({
         $or: [
-          { username: {$regex: req.body.search, $options: "i"} },
-          { email:  {$regex: req.body.search, $options: "i"} },
+          { username: { $regex: req.body.search, $options: "i" } },
+          { email: { $regex: req.body.search, $options: "i" } },
+          { phone: { $regex: req.body.searchPhone }  },
         ],
       });
       if (userdata == []) {
@@ -57,13 +61,13 @@ exports.postSearchUser = async (req, res, next) => {
 };
 
 exports.putEditUser = async (req, res, next) => {
-  const oldpath= req.body.image;
-  if(req.file){
+  const oldpath = req.body.image;
+  if (req.file) {
     var path = req.file.path;
     path = path.slice(7, req.file.path.length);
     path = path.replace("\\", "/");
   }
-  
+
   let updatedUser = await userModel.findOneAndUpdate(
     { _id: req.body.id },
     {
@@ -71,7 +75,7 @@ exports.putEditUser = async (req, res, next) => {
         username: req.body.username,
         email: req.body.email,
         phone: req.body.phone,
-        profileImage: path?path:oldpath,
+        profileImage: path ? path : oldpath,
       },
     },
     { new: true }
