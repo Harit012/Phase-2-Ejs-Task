@@ -1,6 +1,15 @@
+# this file are needed to run project
+
 node_modules
 public/images
 model/useroperation.js
+
+
+
+# this are referance files 
+
 zzz.txt
 zzz.html
 zzz.js
+zzz.json
+zzz.css

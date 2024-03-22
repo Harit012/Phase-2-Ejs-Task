@@ -43,7 +43,7 @@ $(document).on("click", ".index-btn", async function (e) {
             
                   </div>
               </div>
-                          `;
+              `;
             }
         },
         error: function(error) {

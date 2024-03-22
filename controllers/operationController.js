@@ -13,7 +13,6 @@ exports.getHomePage = async (req, res, next) => {
 };
 
 exports.getPageData = async (req, res, next) => {
-  
   const page = req.body.page;
 
   const usersPerPage = 10;
@@ -47,25 +46,24 @@ exports.postAddUser = async (req, res, next) => {
 // finding User
 exports.postSearchUser = async (req, res, next) => {
   var search = req.body.search;
-  var numsearch = Number(req.body.numsearch);
-  // numsearch = mongoose.Number.ObjectId(numsearch)
-  // console.log(typeof numsearch);
+  console.log(search);
+  
   if (req.body.search == null || req.body.search == undefined) {
-    res.send(req.body.previousHtml);
+    // res.send(req.body.previousHtml);
   } else {
     try {
       const userdata = await userModel.find({
         $or: [
-          { username: { $regex: search, $options: "i" } },
-          { email: { $regex: search, $options: "i" } },
+          { username: { $regex: req.body.search, $options: "i" } },
+          { email: { $regex: req.body.search, $options: "i" } },
           // { _id:{ $eq:search} },
           // { phone: { $convert: { input: numsearch, to: "int32" } } },
-          // { phone: {$eq:numsearch} },
         ],
       });
       if (userdata == []) {
         res.send({ data: "no Data found" });
       } else {
+        console.log(userdata);
         res.send(userdata);
       }
     } catch (err) {
