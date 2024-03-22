@@ -1,3 +1,21 @@
+var resetButtonClick = $("#formResetBtn").on("click", function (e) {
+  $("#username").val("");
+  $("#phone").val("");
+  $("#email").val("");
+  $("#insertedFile").text("");
+  $("#update-form").attr({
+    id: "user-form",
+    method: "post",
+    enctype: "multipart/form-data",
+  });
+    $("#form-title").text("User Registration Form");
+    $("#formUpdateBtn").text("Add User");
+    $("#insertedFile").text(" ");
+    $("#userProfile").attr("required", "required");
+    $("#formUpdateBtn").attr({ id: "formSubmitBtn", style:"background-color:  #4CAF50;" });
+  
+  });
+
 $(document).on("click", ".edit-btn", function (e) {
   $("#user-form").attr({
     id: "update-form",
@@ -9,14 +27,8 @@ $(document).on("click", ".edit-btn", function (e) {
   $("#formUpdateBtn").text("Update User");
   document.getElementById("userProfile").removeAttribute("required");
 
-  $("#formResetBtn").on("click", function (e) {
-    $("#update-form")[0].reset();
-    $("#update-form").attr({
-      id: "user-form",
-      method: "post",
-      enctype: "multipart/form-data",
-    });
-  });
+  resetButtonClick
+  
   var boxnode = e.target.parentNode.parentNode;
   var id = e.target.parentNode.id;
   let name = e.target.parentNode.querySelector("#Edname").textContent.trim();
@@ -34,11 +46,11 @@ $(document).on("click", ".edit-btn", function (e) {
   $("#email").val(email);
   $("#insertedFile").text(imagename);
 
-  $("#formUpdateBtn").on("click", async function (e) {
+  $("#update-form").on("submit", async function (e) {
     e.preventDefault();
     const fd = new FormData(document.querySelector("#update-form"));
     fd.append("id", id);
-    fd.append("image", profile)
+    fd.append("image", profile);
 
     console.log(fd);
 
@@ -51,7 +63,8 @@ $(document).on("click", ".edit-btn", function (e) {
         console.log(this.responseText);
         // let data = JSON.parse(response);
         data = JSON.parse(this.responseText);
-        boxnode.innerHTML = `
+        if (!data.error) {
+          boxnode.innerHTML = `
                   <div class="inBoxLeft" style="display: flex;">
                       <div class="profilePicture"
                           style="height: 100px;width: 100px;border-radius: 50%;margin: 20px;background-size: cover;background-image: url('${data.profileImage}');">
@@ -84,17 +97,21 @@ $(document).on("click", ".edit-btn", function (e) {
               </div>
           </div>
         `;
-        $("#update-form")[0].reset();
-        $("#update-form").attr({
-          id: "user-form",
-          method: "post",
-          enctype: "multipart/form-data",
-        });
-        $("#form-title").text("User Registration Form");
-        $("#formUpdateBtn").text("Add User");
-        $("#insertedFile").text(" ");
-        $("#userProfile").attr("required", "required");
-        $("#formUpdateBtn").attr({ id: "formSubmitBtn" });
+          $("#update-form")[0].reset();
+          $("#update-form").attr({
+            id: "user-form",
+            method: "post",
+            enctype: "multipart/form-data",
+          });
+          $("#form-title").text("User Registration Form");
+          $("#formUpdateBtn").text("Add User");
+          $("#insertedFile").text(" ");
+          $("#userProfile").attr("required", "required");
+          $("#formUpdateBtn").attr({ id: "formSubmitBtn", style:"background-color:  #4CAF50;" });
+        }
+        else{
+          alert(`The email:-  ${data.email} already Taken \n Please try with another one`);
+        }
       }
     };
   });

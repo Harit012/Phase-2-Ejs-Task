@@ -1,16 +1,16 @@
 async function search() {
   let search = document.getElementById("searchBar").value;
-  let phone = Number(search);
-  // console.log(phone);
-  // console.log(typeof phone);
+  let numsearch = Number(search);
+  console.log(numsearch);
+  let previousHtml=$("#data-body").html();
 
   let fetchReq = await fetch("/searchUser", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ search: search, searchPhone: phone }),
+    body: JSON.stringify({ search: search , numsearch: numsearch, previousHtml:previousHtml}),
   });
   fetchReq = await fetchReq.json().then((fetchReq) => {
-    let htmlString = "";
+    let htmlString = ``;
     for (let i = 0; i < fetchReq.length; i++) {
       htmlString += `
                   <div class="box"

@@ -1,0 +1,40 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+  }
+  
+  main {
+    padding: 2rem;
+    min-height: 80vh; /* Adjust height as needed */
+  }
+  
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #f2f2f2; /* Adjust background color */
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .pagination {
+    display: flex;
+  }
+  
+  .pagination button {
+    border: none;
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem;
+    cursor: pointer;
+    background-color: #ddd; /* Adjust button background color */
+    color: #333; /* Adjust button text color */
+  }
+  
+  .pagination button.active {
+    background-color: #ccc; /* Adjust active button background color */
+  }
+  

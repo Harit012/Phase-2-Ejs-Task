@@ -7,6 +7,8 @@ const operationController = require("../controllers/operationController");
 
 router.get("/home", operationController.getHomePage);
 
+router.post("/pageData", operationController.getPageData);
+
 router.post("/adduser", operationController.postAddUser);
 
 router.post("/searchUser", operationController.postSearchUser);

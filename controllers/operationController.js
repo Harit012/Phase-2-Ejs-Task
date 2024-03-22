@@ -1,14 +1,29 @@
 const userModel = require("../model/user");
-
+// const mongoose = require("mongoose");
 exports.getHomePage = async (req, res, next) => {
-  const userdata = await userModel.find();
+  const userdata = await userModel.find().limit(10);
+  const totalUsers = await userModel.find().count();
+  const totalPages = totalUsers / 10;
 
   res.render("homePage", {
+    totalPages: totalPages,
     pageTitle: "Home Page",
     userData: userdata,
   });
 };
 
+exports.getPageData = async (req, res, next) => {
+  
+  const page = req.body.page;
+
+  const usersPerPage = 10;
+  let userdata = await userModel
+    .find()
+    .skip(page * usersPerPage)
+    .limit(usersPerPage);
+
+  res.send(userdata);
+};
 // adding User
 exports.postAddUser = async (req, res, next) => {
   let path = req.file.path;
@@ -22,30 +37,30 @@ exports.postAddUser = async (req, res, next) => {
       phone: req.body.phone,
       profileImage: path,
     });
-    res.type("json");
     res.send(user);
   } catch (err) {
-    console.log(err);
     console.log("Error: in adding preson `controllers/operationController.js`");
+    res.send({ error: err, email: req.body.email });
   }
 };
 
 // finding User
 exports.postSearchUser = async (req, res, next) => {
-  if (req.body.search == "") {
-    let userdata = await userModel.find();
-    res.send(userdata);
+  var search = req.body.search;
+  var numsearch = Number(req.body.numsearch);
+  // numsearch = mongoose.Number.ObjectId(numsearch)
+  // console.log(typeof numsearch);
+  if (req.body.search == null || req.body.search == undefined) {
+    res.send(req.body.previousHtml);
   } else {
-    // let searchPhone = req.body.searchPhone;
-    // console.log(searchPhone);
-    // console.log(typeof searchPhone);
-    
     try {
       const userdata = await userModel.find({
         $or: [
-          { username: { $regex: req.body.search, $options: "i" } },
-          { email: { $regex: req.body.search, $options: "i" } },
-          { phone: { $regex: req.body.searchPhone }  },
+          { username: { $regex: search, $options: "i" } },
+          { email: { $regex: search, $options: "i" } },
+          // { _id:{ $eq:search} },
+          // { phone: { $convert: { input: numsearch, to: "int32" } } },
+          // { phone: {$eq:numsearch} },
         ],
       });
       if (userdata == []) {
@@ -55,7 +70,7 @@ exports.postSearchUser = async (req, res, next) => {
       }
     } catch (err) {
       console.log(err);
-      res.send({ data: "no Data found" });
+      res.send({ data: "no Data found", error: err });
     }
   }
 };
@@ -67,21 +82,27 @@ exports.putEditUser = async (req, res, next) => {
     path = path.slice(7, req.file.path.length);
     path = path.replace("\\", "/");
   }
-
-  let updatedUser = await userModel.findOneAndUpdate(
-    { _id: req.body.id },
-    {
-      $set: {
-        username: req.body.username,
-        email: req.body.email,
-        phone: req.body.phone,
-        profileImage: path ? path : oldpath,
+  try {
+    let updatedUser = await userModel.findOneAndUpdate(
+      { _id: req.body.id },
+      {
+        $set: {
+          username: req.body.username,
+          email: req.body.email,
+          phone: req.body.phone,
+          profileImage: path ? path : oldpath,
+        },
       },
-    },
-    { new: true }
-  );
+      { new: true }
+    );
 
-  res.send(updatedUser);
+    res.send(updatedUser);
+  } catch (err) {
+    console.log(
+      "Error: in updating preson `controllers/operationController.js`"
+    );
+    res.send({ error: err, email: req.body.email });
+  }
 };
 
 exports.deleteUser = async (req, res, next) => {

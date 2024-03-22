@@ -6,7 +6,7 @@
             <nav class="navbar">
                 <div class="navbar-title">Profiles</div>
                 <div class="search-container">
-                    <input id="searchBar" type="text" placeholder="Search..." oninput=search() >
+                    <input id="searchBar" type="text" placeholder="Search..." oninput=search()>
                     <button class="search-button"><i class="fa fa-search"></i></button>
                 </div>
 
@@ -17,7 +17,7 @@
                 <div class="grid-item large">
                     <div class="data-body" id="data-body">
                         <% if (userData.length !=0) { %>
-                            <% for ( user of userData ){ let i=0; %>
+                            <% for ( user of userData ){ %>
                                 <div class="box">
                                     <div class="inBoxLeft">
                                         <div class="profilePicture"
@@ -56,10 +56,9 @@
                                         <button class="delete-btn">delete</button>
                                     </div>
                                 </div>
-                                <% i++; }%>
-                                    <% } else { %>
-                                        <h1>No Data Found</h1>
-                                        <%} %>
+                                <% } } else { %>
+                                    <h1>No Data Found</h1>
+                                    <% } %>
                     </div>
                 </div>
                 <div class="grid-item small">
@@ -73,11 +72,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="email">Email:</label>
-                                <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+                                <input type="email" id="email" name="email" placeholder="Enter your email address"
+                                    required>
                             </div>
                             <div class="form-group">
                                 <label for="phone">Phone Number:</label>
-                                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+                                <input type="tel" id="phone" name="phone" maxlength="10" pattern="[0-9]{10}"
+                                    placeholder="Enter your phone number" required>
                             </div>
                             <div class="form-group">
                                 <label for="userProfile">Profile Picture:</label>
@@ -85,7 +86,8 @@
                                 <p id="insertedFile" style="position: relative;left: 50px;font-size: small;"></p>
                             </div>
                             <div class="button-group">
-                                <button type="button" id="formSubmitBtn">Add User</button>
+                                <button type="submit" id="formSubmitBtn" style="background-color: #4CAF50;">Add
+                                    User</button>
                                 <button type="button" id="formResetBtn" onclick=clearForm()>Reset</button>
                             </div>
                         </form>
@@ -94,11 +96,21 @@
             </div>
 
         </section>
+        <footer>
+            <div class="footer">
+                <% for(let i=0;i < totalPages ; i++ ) { %>
+                    <button class="index-btn" id="<%= i %>">
+                        <%= i %>
+                    </button>
+                    <% } %>
+            </div>
+        </footer>
     </body>
     <script src="./javascript/add.js"></script>
     <!-- <script src="./javascript/search.js"></script> -->
     <script src="./javascript/edit.js"></script>
     <script src="./javascript/delete.js"></script>
+    <script src="./javascript/pagination.js"></script>
     <script>
         function clearForm() {
             $('#user-form')[0].reset();
