@@ -6,8 +6,8 @@
             <nav class="navbar">
                 <div class="navbar-title">Profiles</div>
                 <div class="search-container">
-                    <input id="searchBar" type="text" placeholder="Search..." oninput=search()>
-                    <button class="search-button"><i class="fa fa-search"></i></button>
+                    <input id="searchBar" type="text" placeholder="Search..." >
+                    <button class="search-button" onclick=search()><i class="fa fa-search"></i></button>
                 </div>
 
             </nav>
@@ -98,11 +98,8 @@
         </section>
         <footer>
             <div class="footer">
-                <% for(let i=0;i < totalPages ; i++ ) { %>
-                    <button class="index-btn" id="<%= i %>">
-                        <%= i %>
-                    </button>
-                    <% } %>
+                <button class="pagination-btn" id="prv-0"><< Prev</button>
+                <button class="pagination-btn" id="nxt-0">next >></button>
             </div>
         </footer>
     </body>
@@ -111,6 +108,7 @@
     <script src="./javascript/edit.js"></script>
     <script src="./javascript/delete.js"></script>
     <script src="./javascript/pagination.js"></script>
+    <script src="./javascript/searchpagination.js"></script>
     <script>
         function clearForm() {
             $('#user-form')[0].reset();

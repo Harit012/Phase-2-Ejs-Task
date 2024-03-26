@@ -1,27 +1,29 @@
+const { response } = require("express");
 const userModel = require("../model/user");
+var usersPerPage = 5;
 // const mongoose = require("mongoose");
 exports.getHomePage = async (req, res, next) => {
-  const userdata = await userModel.find().limit(10);
-  const totalUsers = await userModel.find().count();
-  const totalPages = totalUsers / 10;
+  const userdata = await userModel.find().limit(usersPerPage);
 
   res.render("homePage", {
-    totalPages: totalPages,
     pageTitle: "Home Page",
     userData: userdata,
   });
 };
 
 exports.getPageData = async (req, res, next) => {
-  const page = req.body.page;
+  console.log(`Server side pagination called for page no :- ${req.body.page}`);
+  console.log(`The ip is ${req.connection.remoteaddress}`);
 
-  const usersPerPage = 10;
-  let userdata = await userModel
-    .find()
-    .skip(page * usersPerPage)
-    .limit(usersPerPage);
-
-  res.send(userdata);
+  const page = Number(req.body.page);
+  let Pages = Math.ceil((await userModel.countDocuments()) / usersPerPage);
+  if (page < Pages) {
+    let userdata = await userModel
+      .find()
+      .skip(page * usersPerPage)
+      .limit(usersPerPage);
+    res.send({ userdata, Pages });
+  } else res.send({ outOfRange: true });
 };
 // adding User
 exports.postAddUser = async (req, res, next) => {
@@ -45,31 +47,52 @@ exports.postAddUser = async (req, res, next) => {
 
 // finding User
 exports.postSearchUser = async (req, res, next) => {
-  var search = req.body.search;
-  console.log(search);
+  let isNum = isNaN(req.body.search);
+  let search = isNum ?0 : Number(req.body.search);
   
-  if (req.body.search == null || req.body.search == undefined) {
-    // res.send(req.body.previousHtml);
-  } else {
-    try {
-      const userdata = await userModel.find({
+  var page = req.body.page ? Number(req.body.page) : 0;
+  
+  const Page = Math.ceil(
+    (await userModel
+      .find({
         $or: [
           { username: { $regex: req.body.search, $options: "i" } },
           { email: { $regex: req.body.search, $options: "i" } },
-          // { _id:{ $eq:search} },
-          // { phone: { $convert: { input: numsearch, to: "int32" } } },
+          { phone: { $eq: search } },
         ],
-      });
+      })
+      .count()) / usersPerPage
+  );
+
+  try {
+    if (page < Page) {
+      const userdata = await userModel
+        .find({
+          $or: [
+            { username: { $regex: req.body.search, $options: "i" } },
+            { email: { $regex: req.body.search, $options: "i" } },
+            { phone: { $eq: search } },
+          ],
+        })
+        .skip(page * usersPerPage)
+        .limit(usersPerPage);
+
       if (userdata == []) {
-        res.send({ data: "no Data found" });
+        res.send({ outOfData: "no Data found" });
+        
       } else {
-        console.log(userdata);
-        res.send(userdata);
+        res.send({ userdata: userdata, Page: Page });
       }
-    } catch (err) {
-      console.log(err);
-      res.send({ data: "no Data found", error: err });
+    } else {
+      if(Page===0){        
+        res.send({ userNotFound: true });
+      }else{        
+        res.send({ outOfRange: true });
+      }    
     }
+  } catch (err) {
+    console.log(err);
+    res.send({ data: "no Data found", error: err });
   }
 };
 
