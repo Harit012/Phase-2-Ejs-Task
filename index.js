@@ -4,7 +4,15 @@ const { urlencoded } = require("body-parser");
 const multer = require("multer");
 const mongoose = require ("mongoose");
 const cors = require("cors");
-mongoose.connect("mongodb://localhost:27017/EjsTask");
+
+try{
+  mongoose.connect("mongodb://localhost:27017/EjsTask");
+  console.log("mongodb connected");
+  
+}
+catch(err){
+  console.log(err);
+}
   
 
 const storage = multer.diskStorage({

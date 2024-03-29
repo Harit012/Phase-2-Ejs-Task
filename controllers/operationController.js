@@ -1,5 +1,8 @@
 const { response } = require("express");
 const userModel = require("../model/user");
+const fs = require("fs");
+var pathm = require("path");
+
 var usersPerPage = 5;
 // const mongoose = require("mongoose");
 exports.getHomePage = async (req, res, next) => {
@@ -48,10 +51,10 @@ exports.postAddUser = async (req, res, next) => {
 // finding User
 exports.postSearchUser = async (req, res, next) => {
   let isNum = isNaN(req.body.search);
-  let search = isNum ?0 : Number(req.body.search);
-  
+  let search = isNum ? 0 : Number(req.body.search);
+
   var page = req.body.page ? Number(req.body.page) : 0;
-  
+
   const Page = Math.ceil(
     (await userModel
       .find({
@@ -79,16 +82,15 @@ exports.postSearchUser = async (req, res, next) => {
 
       if (userdata == []) {
         res.send({ outOfData: "no Data found" });
-        
       } else {
         res.send({ userdata: userdata, Page: Page });
       }
     } else {
-      if(Page===0){        
+      if (Page === 0) {
         res.send({ userNotFound: true });
-      }else{        
+      } else {
         res.send({ outOfRange: true });
-      }    
+      }
     }
   } catch (err) {
     console.log(err);
@@ -99,6 +101,7 @@ exports.postSearchUser = async (req, res, next) => {
 exports.putEditUser = async (req, res, next) => {
   const oldpath = req.body.image;
   if (req.file) {
+    fs.unlink(pathm.join(__dirname, `../public/${oldpath}`), )
     var path = req.file.path;
     path = path.slice(7, req.file.path.length);
     path = path.replace("\\", "/");
@@ -127,9 +130,16 @@ exports.putEditUser = async (req, res, next) => {
 };
 
 exports.deleteUser = async (req, res, next) => {
-  let id = req.body.id;
-  console.log(id);
-  let userdata = await userModel.findByIdAndDelete({ _id: id });
-
-  res.send(userdata);
+  try {
+    let id = req.body.id;
+    let imgpath = req.body.path;
+    fs.unlink(pathm.join(__dirname, `../public/${imgpath}`), (err) => {
+      console.log(`error in deleting image`);
+    })
+    let userdata = await userModel.findByIdAndDelete({ _id: id });
+    res.send(userdata);
+  } catch (e) {
+    console.log(`Error in deleting :--  ${e}`);
+    res.send({ error: e, message: "Error in deleting" });
+  }
 };
