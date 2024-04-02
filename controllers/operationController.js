@@ -101,7 +101,7 @@ exports.postSearchUser = async (req, res, next) => {
 exports.putEditUser = async (req, res, next) => {
   const oldpath = req.body.image;
   if (req.file) {
-    fs.unlink(pathm.join(__dirname, `../public/${oldpath}`), )
+    fs.unlink(pathm.join(__dirname, `../public/${oldpath}`))
     var path = req.file.path;
     path = path.slice(7, req.file.path.length);
     path = path.replace("\\", "/");
@@ -133,9 +133,7 @@ exports.deleteUser = async (req, res, next) => {
   try {
     let id = req.body.id;
     let imgpath = req.body.path;
-    fs.unlink(pathm.join(__dirname, `../public/${imgpath}`), (err) => {
-      console.log(`error in deleting image`);
-    })
+    fs.unlink(pathm.join(__dirname, `../public/${imgpath}`))
     let userdata = await userModel.findByIdAndDelete({ _id: id });
     res.send(userdata);
   } catch (e) {

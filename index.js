@@ -7,10 +7,10 @@ const cors = require("cors");
 
 try{
   mongoose.connect("mongodb://localhost:27017/EjsTask");
-  console.log("mongodb connected");
-  
+  console.log("mongodb connected"); 
 }
 catch(err){
+  console.log("mongodb not connected");  
   console.log(err);
 }
   
@@ -42,5 +42,5 @@ app.use(upload.single("userProfile"), operationalRoutes);
 app.use("/", errorHandler.getError);
 
 app.listen(3050, () => {
-  console.log(`app is live on port 3050`);
+  console.log(`app is live on port 3050 :- http://localhost:3050`);
 });
